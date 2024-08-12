@@ -1,16 +1,10 @@
-'''
-Library of useful functions for working with images.
-'''
-<<<<<<< HEAD
-
 import requests
 import ctypes
 import os
 
-=======
->>>>>>> b01456aa69c266ac393e284575c5955743302be9
 def main():
-    # TODO: Add code to test the functions in this module
+    """Test the functions in this module."""
+    # Add test code here if needed
     return
 
 def download_image(image_url):
@@ -22,21 +16,17 @@ def download_image(image_url):
         image_url (str): URL of image
 
     Returns:
-        bytes: Binary image data, if succcessful. None, if unsuccessful.
+        bytes: Binary image data, if successful. None, if unsuccessful.
     """
-<<<<<<< HEAD
-    print(f'Retrieving image from {image_url}...',  end='')
-    response = requests.get(image_url)
-    if response.status_code == requests.codes.ok:
+    print(f'Retrieving image from {image_url}...', end='')
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()  # Raises HTTPError for bad responses
         print('done')
         return response.content
-    else:
-        print('failed')
-        print(f'Response code: {response.status_code} ({response.reason})')
-=======
-    # TODO: Complete function body
->>>>>>> b01456aa69c266ac393e284575c5955743302be9
-    return
+    except requests.RequestException as e:
+        print(f'failed: {e}')
+    return None
 
 def save_image_file(image_data, image_path):
     """Saves image data as a file on disk.
@@ -48,22 +38,17 @@ def save_image_file(image_data, image_path):
         image_path (str): Path to save image file
 
     Returns:
-        bool: True, if succcessful. False, if unsuccessful
+        bool: True, if successful. False, if unsuccessful
     """
-<<<<<<< HEAD
-    
+    print(f"Saving image to {image_path}...", end='')
     try:
-        print(f"Saving image to {image_path}...", end='')
         with open(image_path, 'wb') as f:
             f.write(image_data)
             print("Completed")
-            return 
-    except Exception as error:
-        print(f"failed: {error}")
-=======
-    # TODO: Complete function body
->>>>>>> b01456aa69c266ac393e284575c5955743302be9
-    return
+            return True
+    except Exception as e:
+        print(f"failed: {e}")
+    return False
 
 def set_desktop_background_image(image_path):
     """Sets the desktop background image to a specific image.
@@ -72,24 +57,19 @@ def set_desktop_background_image(image_path):
         image_path (str): Path of image file
 
     Returns:
-        bytes: True, if succcessful. False, if unsuccessful        
+        bool: True, if successful. False, if unsuccessful
     """
-<<<<<<< HEAD
-    
     print(f"Setting desktop to {image_path}...", end='')
-    SPI_SETDESKWALLPPAPER = 20
+    SPI_SETDESKWALLPAPER = 20
     try:
-        if ctypes.windll.user32.SystemParametersInfoW('SPI_SETDESKWALLPAPER', 0, image_path, 3):
+        if ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3):
             print("Completed")
-            return 
+            return True
         else:
             print("failed")
-    except Exception as ex:
-            print(f"failed: {ex}")
-=======
-    # TODO: Complete function body
->>>>>>> b01456aa69c266ac393e284575c5955743302be9
-    return
+    except Exception as e:
+        print(f"failed: {e}")
+    return False
 
 def scale_image(image_size, max_size=(800, 600)):
     """Calculates the dimensions of an image scaled to a maximum width
@@ -102,8 +82,7 @@ def scale_image(image_size, max_size=(800, 600)):
     Returns:
         tuple[int, int]: Scaled image size in pixels (width, height)
     """
-    ## DO NOT CHANGE THIS FUNCTION ##
-    # NOTE: This function is only needed to support the APOD viewer GUI
+    # DO NOT CHANGE THIS FUNCTION
     resize_ratio = min(max_size[0] / image_size[0], max_size[1] / image_size[1])
     new_size = (int(image_size[0] * resize_ratio), int(image_size[1] * resize_ratio))
     return new_size
