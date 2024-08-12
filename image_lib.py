@@ -21,16 +21,16 @@ def download_image(image_url):
     Returns:
         bytes: Binary image data, if succcessful. None, if unsuccessful.
     """
-    print(f'Retrieving image from {image_url}...',  end='')
-    response = requests.get(image_url)
-    if response.status_code == requests.codes.ok:
+    print(f'Retrieving image from {image_url}...', end='')
+    try:
+        response = requests.get(image_url)
+        response.raise_for_status()  # Raises HTTPError for bad responses
         print('done')
         return response.content
-    else:
+    except requests.RequestException as e:
         print('failed')
-        print(f'Response code: {response.status_code} ({response.reason})')
-    # TODO: Complete function body
-    return
+        print(f'Error: {e}')
+    return None
 
 def save_image_file(image_data, image_path):
     """Saves image data as a file on disk.
@@ -49,12 +49,11 @@ def save_image_file(image_data, image_path):
         print(f"Saving image to {image_path}...", end='')
         with open(image_path, 'wb') as f:
             f.write(image_data)
-            print("Completed")
-            return 
+        print("Completed")
+        return True
     except Exception as error:
         print(f"failed: {error}")
-    # TODO: Complete function body
-    return
+        return False
 
 def set_desktop_background_image(image_path):
     """Sets the desktop background image to a specific image.
@@ -67,17 +66,16 @@ def set_desktop_background_image(image_path):
     """
     
     print(f"Setting desktop to {image_path}...", end='')
-    SPI_SETDESKWALLPPAPER = 20
+    SPI_SETDESKWALLPAPER = 20
     try:
-        if ctypes.windll.user32.SystemParametersInfoW('SPI_SETDESKWALLPAPER', 0, image_path, 3):
+        if ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3):
             print("Completed")
-            return 
+            return True
         else:
             print("failed")
     except Exception as ex:
-            print(f"failed: {ex}")
-    # TODO: Complete function body
-    return
+        print(f"failed: {ex}")
+    return False
 
 def scale_image(image_size, max_size=(800, 600)):
     """Calculates the dimensions of an image scaled to a maximum width

@@ -22,15 +22,15 @@ def get_apod_info(apod_date):
     Returns:
         dict: Dictionary of APOD info, if successful. None if unsuccessful.
     """
-    api_key = "bWdRBzPNHRux9uLcEU4Ly7MStvoYLoCxKHVn8B9p"
+    api_key = "bWdRBzPNHRux9uLcEU4Ly7MStvoYLoCxKHVn8B9p" 
     url = f"https://api.nasa.gov/planetary/apod?date={apod_date}&api_key={api_key}"
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        return response.json()  # Ensure this returns a dictionary with 'title' and other keys
-    else:
-        print("Error fetching APOD data:", response.status_code)
-        return {}
+    try:
+        response = requests.get(url)
+        response.raise_for_status() 
+        return response.json()  
+    except requests.RequestException as e:
+        print(f"Error fetching APOD data: {e}")
+        return None
 
 def get_apod_image_url(apod_info_dict):
     """Gets the URL of the APOD image from the dictionary of APOD information.
