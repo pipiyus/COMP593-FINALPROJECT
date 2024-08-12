@@ -1,11 +1,14 @@
 '''
 Library of useful functions for working with images.
 '''
+<<<<<<< HEAD
 
 import requests
 import ctypes
 import os
 
+=======
+>>>>>>> b01456aa69c266ac393e284575c5955743302be9
 def main():
     # TODO: Add code to test the functions in this module
     return
@@ -21,6 +24,7 @@ def download_image(image_url):
     Returns:
         bytes: Binary image data, if succcessful. None, if unsuccessful.
     """
+<<<<<<< HEAD
     print(f'Retrieving image from {image_url}...',  end='')
     response = requests.get(image_url)
     if response.status_code == requests.codes.ok:
@@ -29,6 +33,9 @@ def download_image(image_url):
     else:
         print('failed')
         print(f'Response code: {response.status_code} ({response.reason})')
+=======
+    # TODO: Complete function body
+>>>>>>> b01456aa69c266ac393e284575c5955743302be9
     return
 
 def save_image_file(image_data, image_path):
@@ -43,6 +50,7 @@ def save_image_file(image_data, image_path):
     Returns:
         bool: True, if succcessful. False, if unsuccessful
     """
+<<<<<<< HEAD
     
     try:
         print(f"Saving image to {image_path}...", end='')
@@ -52,6 +60,9 @@ def save_image_file(image_data, image_path):
             return 
     except Exception as error:
         print(f"failed: {error}")
+=======
+    # TODO: Complete function body
+>>>>>>> b01456aa69c266ac393e284575c5955743302be9
     return
 
 def set_desktop_background_image(image_path):
@@ -63,6 +74,7 @@ def set_desktop_background_image(image_path):
     Returns:
         bytes: True, if succcessful. False, if unsuccessful        
     """
+<<<<<<< HEAD
     
     print(f"Setting desktop to {image_path}...", end='')
     SPI_SETDESKWALLPPAPER = 20
@@ -74,6 +86,9 @@ def set_desktop_background_image(image_path):
             print("failed")
     except Exception as ex:
             print(f"failed: {ex}")
+=======
+    # TODO: Complete function body
+>>>>>>> b01456aa69c266ac393e284575c5955743302be9
     return
 
 def scale_image(image_size, max_size=(800, 600)):
